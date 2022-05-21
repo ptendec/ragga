@@ -1,25 +1,47 @@
-import logo from './logo.svg';
 import './App.css';
+import {useDispatch} from "react-redux"
+import AppRouter from "./Components/AppRouter/AppRouter"
+import jwt_decode from "jwt-decode";
+import {setUser} from "./Store/user/reducer"
+import Header from "./Components/Header/Header"
+import Footer from "./Components/Footer/Footer"
+import {useEffect} from "react"
+const API_URL = process.env.REACT_APP_API_URL
 
 function App() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (localStorage.getItem('accessToken') !== 'undefined' && localStorage.getItem('accessToken')) {
+      const decoded = jwt_decode(localStorage.getItem('accessToken'))
+      dispatch(setUser({...decoded}))
+    }
+    else{
+      console.log('sds')
+      const refreshToken = async () => {
+        const response = await fetch(`${API_URL}/user/refresh`, {
+          method: 'GET',
+          credentials: 'include',
+          redirect: 'follow',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        })
+        const data = await response.json()
+        localStorage.setItem('accessToken', data.accessToken)
+        dispatch(setUser({...data.user}))
+        console.log(data)
+      }
+      refreshToken()
+    }
+  }, [])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header/>
+      <AppRouter/>
+      <Footer/>
     </div>
-  );
+  )
 }
 
 export default App;

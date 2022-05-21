@@ -1,0 +1,11 @@
+.orderPage{
+  padding-top: 70px;
+}
+tr{
+  z-index: 1;
+  position: relative;
+}
+
+.mobTable{
+  width: 100%;
+}

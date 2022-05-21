@@ -1,0 +1,15 @@
+.alert{
+  position: fixed;
+  z-index: 10;
+  bottom: 30px;
+  right: 30px;
+  width: 20%;
+}
+@media (max-width: 780px) {
+  .alert{
+    width: 80%;
+  }
+}
+.card-body{
+  color: #1f2937;
+}

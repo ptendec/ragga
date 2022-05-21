@@ -1,0 +1,43 @@
+.mobHeader{
+  background-color: #fff;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  max-width: 1920px;
+}
+
+.mobNavbar{
+  height: 100%;
+  position: relative;
+  padding-top: 80px;
+  z-index: 52;
+  background-color: #f2f2f2;
+}
+
+.mobNavbar a{
+  font-size: 18px;
+  font-weight: 500;
+  padding: 5px 20px;
+  display: inline-block;
+}
+
+.drawer-overlay{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 3;
+}
+
+.sidebar{
+  position: fixed;
+  height: 100vh;
+  z-index: 3;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+}
+
+.dropdown-content{
+  left: 0;
+  max-width: 320px;
+}

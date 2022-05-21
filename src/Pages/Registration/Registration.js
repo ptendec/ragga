@@ -1,0 +1,95 @@
+import React, {useEffect, useState} from 'react';
+import './Registration.css'
+import {useDispatch, useSelector} from "react-redux"
+import {setUser} from "../../Store/user/reducer"
+import {Link, Navigate, useNavigate} from "react-router-dom"
+import Paper from "../../Components/Paper/Paper"
+
+const API_URL = process.env.REACT_APP_API_URL
+
+const Registration = () => {
+  const dispatch = useDispatch()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const isAuth = useSelector(state => state.user.isAuth)
+  const navigate = useNavigate()
+  const eventRegisterUserHandler = (event) => {
+    event.preventDefault()
+    const request = {
+      email,
+      password
+    }
+    fetch(`${API_URL}/user/registration`, {
+      method: 'POST',
+      credentials: 'include',
+      redirect: 'follow',
+
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(request)
+    }).then(async response => {
+      console.log(response)
+      const data = await response.json()
+      if (response.status === 200) {
+        dispatch(setUser(data.user))
+        localStorage.setItem('accessToken', data.accessToken)
+        navigate('/')
+      } else {
+      }
+    })
+  }
+  useEffect(() => {
+    if (isAuth) {
+      return <Navigate to={'/'}/>
+    }
+  }, [isAuth])
+
+  const eventInputChangeHandler = (event) => {
+    switch (event.target.name) {
+      case 'email' :
+        setEmail(event.target.value)
+        break
+      case 'password' :
+        setPassword(event.target.value)
+        break
+    }
+  }
+  return (
+    <div className="registration">
+      <div className="container justify-center grid grid-cols-12 gap-4">
+        <div className="xl:col-span-4 col-span-12 justify-center">
+          <Paper>
+            <h1 className="authorization__header">Создать аккаунт</h1>
+            <form className="flex flex-col justify-center">
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text">Введите email</span>
+                  <span className="label-text-alt hidden">Alt label</span>
+                </label>
+                <input type="text" placeholder="info@example.com" name="email" className="input input-bordered w-full" onChange={event => eventInputChangeHandler(event)}/>
+                <label className="label">
+                  <span className="label-text-alt">Alt label</span>
+                </label>
+              </div>
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text">Введите пароль</span>
+                </label>
+                <input type="password" placeholder="*****" name="password" className="input input-bordered w-full" onChange={event => eventInputChangeHandler(event)}/>
+                <label className="label">
+                  <span className="label-text-alt">Alt label</span>
+                </label>
+              </div>
+              <button className="btn" onClick={event => eventRegisterUserHandler(event)}>Войти</button>
+              <p className="py-4">У вас уже есть аккаунт? <span className="underline"><Link
+                to="/authorization">Войти</Link></span></p>
+            </form>
+          </Paper>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Registration;
