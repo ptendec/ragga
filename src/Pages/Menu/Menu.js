@@ -4,8 +4,6 @@ import fetchIntercept from "../../API/fetchIntercept"
 import {useSelector} from "react-redux"
 import Food from "../../Components/Food/Food"
 
-const FILE_URL = process.env.REACT_APP_FILE_URL
-
 const Menu = () => {
   const [rolls, setRolls] = useState([])
   const [sets, setSets] = useState([])

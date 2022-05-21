@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import './Food.css'
 import {useDispatch, useSelector} from "react-redux"
 import {deleteItemFromCart, setItemInCart} from "../../Store/cart/reducer"
-
-const FILE_URL = process.env.REACT_APP_FILE_URL
+import {FILE_URL} from "../../consts"
 
 const Food = ({id, name, description, price, type, image}) => {
   const isAuth = useSelector(state => state.user.isAuth)

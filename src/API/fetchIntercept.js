@@ -1,4 +1,4 @@
-const API_URL = process.env.REACT_APP_API_URL
+import {API_URL} from "../consts"
 
 const originalRequest = async (url, config) => {
   url = `${API_URL}${url}`

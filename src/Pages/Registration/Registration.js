@@ -4,8 +4,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {setUser} from "../../Store/user/reducer"
 import {Link, Navigate, useNavigate} from "react-router-dom"
 import Paper from "../../Components/Paper/Paper"
-
-const API_URL = process.env.REACT_APP_API_URL
+import {API_URL} from "../../consts"
 
 const Registration = () => {
   const dispatch = useDispatch()

@@ -6,7 +6,7 @@ import {setUser} from "./Store/user/reducer"
 import Header from "./Components/Header/Header"
 import Footer from "./Components/Footer/Footer"
 import {useEffect} from "react"
-const API_URL = process.env.REACT_APP_API_URL
+import {API_URL} from "./consts"
 
 function App() {
   const dispatch = useDispatch()
